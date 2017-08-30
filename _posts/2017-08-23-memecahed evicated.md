@@ -9,7 +9,8 @@
     - NOSQL
     - memcached
     - 测试
- ---
+---
+ 
 #### 测试目标
 * 线上1.4.5版本是否直接从队尾踢数据 （是）
 * 已到期数据是否计入被踢（不计入）  
@@ -42,3 +43,6 @@ start: memcached -m 8 -p 11211 -u ljq -d
 stats: stats / stats slabs / stats items  
 dump: stats cachedump {slab_id} {limit num}   
 get: get {session key}
+
+
+
