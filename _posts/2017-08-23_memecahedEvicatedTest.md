@@ -4,11 +4,9 @@
     layout: post
     title: Memcached evicted 不同版本逻辑测试
     categories:
-    - NOSQL
+    - 缓存
     tags:
-    - NOSQL
     - memcached
-    - 测试
 ---
  
 #### 测试目标

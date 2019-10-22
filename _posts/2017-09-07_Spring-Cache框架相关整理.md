@@ -1,13 +1,13 @@
 ---
     author: Dawn1iu
-    date: 2015-09-07
+    date: 2017-09-07
     layout: post
     title: Spring Redis相关整理
     categories:
-    - nosql
+    - 缓存
     tags:
     - redis
-    - nosql
+    - spring-cache
 ---
 ## Cache框架相关整理
 

@@ -4,10 +4,9 @@
     layout: post
     title: Spring Redis相关整理
     categories:
-    - nosql
+    - 缓存
     tags:
-    - redis
-    - nosql
+    - spring-data-redis
 ---
 ## Spring Redis相关整理
 
