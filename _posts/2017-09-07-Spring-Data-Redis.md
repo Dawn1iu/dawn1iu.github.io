@@ -5,6 +5,8 @@
     title: spring-data-redis相关整理
     tags:
     - redis
+    - spring
+
 ---
 ## spring-data-redis相关整理
 
