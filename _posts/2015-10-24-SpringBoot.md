@@ -5,6 +5,7 @@
     title: SpringBoot相关整理
     tags:
 		- springboot
+		- spring
 ---
 ## SpringBoot相关整理
 ### 1、SpringApplication 执行过程

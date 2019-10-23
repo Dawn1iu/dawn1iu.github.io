@@ -5,6 +5,7 @@
     title: Spring Redis相关整理
     tags:
     - redis
+    - spring
 ---
 
 
