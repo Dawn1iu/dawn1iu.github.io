@@ -3,8 +3,6 @@
     date: 2017-09-07
     layout: post
     title: Redis 事务
-    categories:
-    - 缓存
     tags:
     - redis
 ---

@@ -3,12 +3,11 @@
     date: 2017-08-23
     layout: post
     title: Memcached evicted 不同版本逻辑测试
-    categories:
-    - 缓存
     tags:
+	- 缓存
     - memcached
 ---
- 
+
 #### 测试目标
 * 线上1.4.5版本是否直接从队尾踢数据 （是）
 * 已到期数据是否计入被踢（不计入）  

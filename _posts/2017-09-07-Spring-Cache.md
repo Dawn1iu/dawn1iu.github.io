@@ -3,9 +3,8 @@
     date: 2017-09-07
     layout: post
     title: Spring Redis相关整理
-    categories:
-    - 缓存
     tags:
+	- 缓存
     - redis
     - spring-cache
 ---
@@ -341,52 +340,52 @@ processCacheEvicts(contexts.get(CacheEvictOperation.class), false, cacheValue);
 
 EdsCacheAspect：
 缓存注解的切面类，仅简单调用CacheProcessor的接口。
- 
+
 CacheProcessor：
 注解处理的核心逻辑。
 负责注解表达式解析、调用缓存查询/删除接口、调用数据加载接口、刷新自动加载需要的数据、触发异步刷新等。
- 
+
 用户可以根据需求，通过构造方法或setter方法，传入分布式缓存的具体实现类、本地缓存具体实现类、分布式锁实现类等。
 负责根据配置，初始化自动加载类、缓存异步刷新类等。
- 
+
 CacheAutoLoader：
 负责自动加载的功能。实现细节看后面。
- 
+
 CacheRefreshProcessor：
 负责异步刷新缓存。
 当注解开启自动加载且未因超时等被驱逐时，缓存删除，会触发一次异步刷新任务。
- 
+
 CacheProcessorHelper：
 由于正常的注解切面处理流程、自动加载、异步刷新，都最终需要执行“数据加载->写缓存”的逻辑，所以将逻辑抽出来提供统一接口，
 但如果将CacheProcessor传入CacheAutoLoader、CacheRefreshProcessor等，会有循环调用的风险，所以提取出来放到CacheProcessorHelper中。
 所有流程统一通过CacheProcessorHelper提供的接口来进行真正的数据加载、更细缓存。
- 
+
 DataLoaderFactory：
 获取DataLoader的工厂方法。
 由于每次进行数据加载都需要得到一个DataLoader，如果每次都new一个对象会影响性能，所以使用apache的GenericObjectPool缓存并复用dataLoader对象。
 DataLoaderFactory自身提供静态的getInstance接口来产生工厂实例（单例、Lazy）。
 提供borrow接口，从pool中借出并初始化dataLoader实例，提供return接口归回实例。
-  
+
 DataLoader：
 负责数据加载的逻辑。除了调用真正的数据加载外，还负责“加载等待”功能，分布式锁功能等。
- 
+
 ICacheManager：
 通用的缓存操作接口。
 使用方都只调用该接口，而不是具体的实现类，目前实现了该接口的类有RedisCacheManager、EhCacheCacheManager，用户可以实现自己的缓存操作逻辑，并传入CacheProcessor即可。
- 
+
 AbstractCacheExpressionParser：
 抽象的表达式解析类。
 使用方都只调用该抽象类的接口，目前默认使用的是子类CacheSpelParser，实现了Spring Expression Language表达式。用户可以实现自己的表达式解析器并传入CacheProcessor。
 由于表达式解析使用过的频率非常高，目前CacheSpelParser对Expression类进行了本地缓存。CacheSpelParser后续会提供注册自定义函数接口，方便表达式的使用。
- 
+
 IDistributedLock：
 分布式锁接口。
 使用方都只调用该接口，而不是具体的实现类，目前默认使用的是RedisDistributedLock实现类（具体实现细节看后面）。
- 
+
 ICloner:
 深拷贝接口。
 使用方都只调用该接口，而不是具体的实现类，目前默认使用的是HessianCloner，使用Hessian序列化来实现深拷贝，如果是常见的不可变类，则直接引用。
- 
+
 CacheWrapper：
 真正存在缓存中的，是CacheWrapper封装类，其中封装了data、超时时间等信息。
 即使数据源返回的结果为null，也会在缓存中存一个CacheWrapper，避免了空值持续穿透到db的问题。
@@ -406,14 +405,14 @@ ConcurrentLinkedHashMap：
 ConcurrentLinkedHashMap<CacheKeyWrapper, AutoLoading> autoLoadMap 存放所有需要自动加载的key与信息。
 AutoLoading中包括最近刷新时间、最近请求时间、是否正在加载中、ProceedingJoinPoint、入参、注解信息、key等。
 autoLoadMap使用google的ConcurrentLinkedHashMap结构，capacity是由配置指定的，达到capacity后会自动驱逐队列尾部（最长时间没有被访问过的元素）。
- 
+
 processingQueue：
 LinkedBlockingQueue<AutoLoading> processingQueue 阻塞队列中存放需要开始执行自动加载的AutoLoading。
- 
+
 生产者线程：
 生产者线程会定时遍历该map，找出需要开始执行自动加载的AutoLoading，并添加到processingQueue阻塞队列中供消费者线程处理。
 生产者线程也负责驱逐超时（超过requestTimeout没有被查询过的key）的AutoLoading，以停止自动加载。
- 
+
 消费者线：
 消费者线程池是固定大小的线程池，线程数量由配置决定。
 消费者线程阻塞式的从processingQueue take出需要处理的AutoLoading，并执行真正的数据加载、缓存更新等操作。

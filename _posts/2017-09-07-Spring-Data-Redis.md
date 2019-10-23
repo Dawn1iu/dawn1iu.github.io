@@ -3,9 +3,9 @@
     date: 2017-09-07
     layout: post
     title: Spring Redis相关整理
-    categories:
-    - 缓存
     tags:
+	- 缓存
+	- redis
     - spring-data-redis
 ---
 ## Spring Redis相关整理
@@ -16,7 +16,7 @@
 
 ###  1. 总
 spring-data-redis提供了redis操作的封装和实现；RedisTemplate模板类封装了redis连接池管理的逻辑，业务代码无须关心获取，释放连接逻辑；spring redis同时支持了Jedis，Jredis,rjc 客户端操作；
- 
+
 spring redis 设计优点可以分为以下几个方面：
 
 1. Redis连接管理：用adapter的方式封装了Jedis，Jredis，Rjc等不同redis客户端连接，用抽象工厂的方式供依赖注入。
@@ -63,11 +63,11 @@ RedisOperations接口的实现类就是RedisTemplate本身，主要提供了一�
 
 #### 2.1 总览
 RedisTemplate提供了对连接操作的模板化支持；采用RedisCallback来回调业务操作，使得业务代码无需关心连接处理，以及其他异常处理等过程，简化redis操作；
- 
+
 RedisTemplate继承RedisAccessor 类，配置管理RedisConnectionFactory实现；使得RedisTemplate无需关心底层redis客户端类型
- 
+
 RedisTemplate实现RedisOperations接口，提供value，list，set，sortset，hash以及其他redis操作方法；value，list，set，sortset，hash等操作划分为不同操作类：ValueOperations，ListOperations，SetOperations，ZSetOperations，HashOperations以及bound接口；这些操作都提供了默认实现，这些操作都采用RedisCallback回调实现相关操作
- 
+
 RedisTemplate组合了多个不同RedisSerializer示例，以实现对于key，value的序列化支持；可以方便地实现自己的序列化工具；
 
 //todo
@@ -77,11 +77,11 @@ RedisTemplate组合了多个不同RedisSerializer示例，以实现对于key，v
 实现并没有使用内部持有的RedisOperations，而是CollectionUtils.rename通过事务来保证进行rename操作时，原key一定存在。
 
 在调用 SessionCallback 的实现进行具体操作前后，对连接进行了绑定和解绑。然后在session.execute中，会调用operations.watch(key)来监控值的变化。
- 
+
 连接绑定和解绑也是通过 RedisConnectionUtils 完成的，里面是通过TransactionSynchronizationManager将连接绑定到当前线程的。
 
 //todo
- 
+
 ###  4.坑
 
 ####  4.1 序列化与incr问题

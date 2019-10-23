@@ -3,10 +3,9 @@
     date: 2015-10-24
     layout: post
     title: Spring Boot相关整理
-    categories:
-    - spring
     tags:
     - springboot
+	- spring
 ---
 ## Spring Boot相关整理
 ### 1、SpringApplication 执行过程
