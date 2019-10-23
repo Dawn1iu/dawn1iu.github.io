@@ -12,7 +12,7 @@ github_repo: "https://github.com/Dawn1iu/dawn1iu.github.io.git" # you code repos
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Freedom as Autonomy"
-sidebar-avatar: /img/k.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/艾斯.jpeg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
