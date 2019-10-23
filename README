@@ -1,0 +1,7 @@
+## My site is published at https://yigaoyi.github.io.
+
+
+_config.yml: jekyll的设置文件
+_layouts   :用于存放模板文件
+_posts     :用于存放blog文章
+index.html :首页s
