@@ -2,13 +2,11 @@
     author: Dawn1iu
     date: 2017-09-07
     layout: post
-    title: Spring Redis相关整理
+    title: spring-data-redis相关整理
     tags:
 	- redis
 ---
-
-
-## Spring Redis相关整理
+## spring-data-redis相关整理
 
 ###  楔子
 
