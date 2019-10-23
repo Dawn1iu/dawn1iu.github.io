@@ -4,9 +4,7 @@
     layout: post
     title: Spring Redis相关整理
     tags:
-	- 缓存
     - redis
-    - spring-cache
 ---
 ## Cache框架相关整理
 

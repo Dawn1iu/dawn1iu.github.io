@@ -4,7 +4,6 @@
     layout: post
     title: Memcached evicted 不同版本逻辑测试
     tags:
-	- 缓存
     - memcached
 ---
 
