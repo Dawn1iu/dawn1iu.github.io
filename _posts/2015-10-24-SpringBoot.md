@@ -4,9 +4,10 @@
     layout: post
     title: SpringBoot相关整理
     tags:
-		- springboot
-		- spring
+    - spring
+    - springboot
 ---
+
 ## SpringBoot相关整理
 ### 1、SpringApplication 执行过程
 #### 1）静态run方法
